@@ -2,6 +2,7 @@ package com.RN.app.misc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.RN.app.models.User;
@@ -19,7 +20,8 @@ public class UserDataLoader implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		this.repo.save(new User("admin123", "ilikedoggos", 1));
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
+		this.repo.save(new User("admin123", encoder.encode("ilikedoggos"), "someone@email.com", 1));
 	}
 
 }

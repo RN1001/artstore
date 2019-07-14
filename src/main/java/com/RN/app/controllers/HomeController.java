@@ -3,6 +3,7 @@ package com.RN.app.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,19 +47,20 @@ public class HomeController {
 	@PostMapping(path="/register")
 	public String registerSubmit(@ModelAttribute @Valid User user, BindingResult bindingResult) {
 		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
 		if (bindingResult.hasErrors()) {
 			return "register";
 		}
 		
 		Boolean userExists = repo.existsByUsername(user.getUsername());
 		
-		System.err.println(repo.findByUsername(user.getUsername()));
-		System.err.println(userExists);
-		
 		if (userExists == true) {
 			bindingResult.rejectValue("username", "This username already exists, please use something else.");
 			return "register";
 		} else {
+			//encodes password, passes form data into constructor.
+			user = new User(user.getUsername(), encoder.encode(user.getPassword()), user.getEmail(), user.getOrderId());
 			repo.save(user);
 			return "registerSuccessful";
 		}

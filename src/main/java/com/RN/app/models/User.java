@@ -4,8 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 import lombok.NonNull;
@@ -24,20 +23,26 @@ public class User {
 	@NonNull
 	private String username;
 	
-	@Size(min=8, max=30)
+	@Size(min=8)
 	@NonNull
 	private String password;
 	
+	@Email
+	@NonNull
+	private String email;
+	
+	// must be changed to an orders class, collection class with a manytoone
 	private long orderId;
 	
 	public User() {
 		
 	}
 	
-	public User(String username, String password, long id) {
+	public User(String username, String password, String email, long orderId) {
 		this.username = username;
 		this.password = password;
-		this.orderId = id;
+		this.email = email;
+		this.orderId = orderId;
 	}
 
 	public long getId() {
@@ -63,6 +68,14 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	public long getOrderId() {
 		return orderId;
@@ -74,8 +87,11 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", orderId=" + orderId + "]";
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", orderId=" + orderId + "]";
 	}
+
+	
 	
 	
 	
