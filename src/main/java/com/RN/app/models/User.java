@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 import lombok.NonNull;
 
@@ -14,9 +17,17 @@ public class User {
 	
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Id
-	private @NonNull long id;
-	private @NonNull String username;
-	private @NonNull String password;
+	@NonNull
+	private long id;
+	
+	@Size(min=5, max=30)
+	@NonNull
+	private String username;
+	
+	@Size(min=8, max=30)
+	@NonNull
+	private String password;
+	
 	private long orderId;
 	
 	public User() {

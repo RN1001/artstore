@@ -19,7 +19,7 @@ public class UserDataLoader implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		this.repo.save(new User("admin", "admin", 1));
+		this.repo.save(new User("admin123", "ilikedoggos", 1));
 	}
 
 }
