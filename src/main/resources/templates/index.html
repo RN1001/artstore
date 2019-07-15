@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-<meta charset="ISO-8859-1">
-<title>artstore</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>Art Store</title>
 </head>
 <body>
-	<p th:text="${2+2}"> </p>
+	<div th:replace="fragments/header :: header"></div>	
+		<p th:text="${2+2}"> </p>
+		
+	<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>
+

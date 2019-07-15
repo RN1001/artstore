@@ -28,6 +28,11 @@ public class HomeController {
 		return "index";
 	}
 	
+	@GetMapping(path="/home")
+	public String home() {
+		return "index";
+	}
+	
 	@GetMapping(path="/products")
 	public String products() {
 		return "products";
