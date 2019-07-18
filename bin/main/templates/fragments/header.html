@@ -1,8 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns:th="www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <body>
 	<div th:fragment="header">
-		<p> header </p>
+		<nav class="navbar navbar-light bg-light">
+			<ul class="nav">
+			  <li class="nav-item">
+			    <a class="nav-link active" th:href="@{/}">Home</a>
+			  </li>
+			  <li class="nav-item">
+			    <a class="nav-link" th:href="@{/products}">Products</a>
+			  </li>
+			  <li class="nav-item" sec:authorize="isAnonymous()">
+			    <a class="nav-link" th:href="@{/register}">Register</a>
+			  </li>
+			  <li class="nav-item" sec:authorize="isAnonymous()">
+			    <a class="nav-link" th:href="@{/login}">Login</a>
+			  </li>
+			  <li class="nav-item" sec:authorize="isAuthenticated()">
+			  	<a class="nav-link" th:href="@{/logout}"> Logout </a>
+			  </li>
+			</ul>
+		</nav>
 	</div>
 </body>
 </html>

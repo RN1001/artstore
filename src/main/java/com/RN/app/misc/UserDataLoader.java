@@ -21,7 +21,7 @@ public class UserDataLoader implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
-		this.repo.save(new User("admin123", encoder.encode("ilikedoggos"), "someone@email.com", 1));
+		this.repo.save(new User("admin123", encoder.encode("123hello"), "someone@email.com", 1));
 	}
 
 }

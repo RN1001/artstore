@@ -1,5 +1,6 @@
 package com.RN.app.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,21 +18,26 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Id
 	@NonNull
+	@Column(name="user_id")
 	private long id;
 	
 	@Size(min=5, max=30)
 	@NonNull
+	@Column(name="username")
 	private String username;
 	
 	@Size(min=8)
 	@NonNull
+	@Column(name="password")
 	private String password;
 	
 	@Email
 	@NonNull
+	@Column(name="email")
 	private String email;
 	
 	// must be changed to an orders class, collection class with a manytoone
+	@Column(name="order_id")
 	private long orderId;
 	
 	public User() {

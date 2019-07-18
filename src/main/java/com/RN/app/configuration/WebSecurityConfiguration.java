@@ -1,24 +1,40 @@
 package com.RN.app.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.SpringSecurityCoreVersion;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.util.AntPathMatcher;
+import org.thymeleaf.dialect.IDialect;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
+	@Autowired
 	private UserDetailsService userDetailService;
 	
+	/*
 	public WebSecurityConfiguration(UserDetailsService service) {
 		this.userDetailService = service;
-	}
+	}*/
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -26,10 +42,21 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/").permitAll()
-			.anyRequest().authenticated()
-			.and()
-			.httpBasic();
+				.antMatchers("/", "/products", "/register", "/login").permitAll()
+				.anyRequest().authenticated()
+				.and()
+				.httpBasic();
+		
+		/*	.formLogin()
+				.loginPage("/login")
+				.defaultSuccessUrl("/welcome")
+				.permitAll()
+				.and()
+			.logout().invalidateHttpSession(true)
+				.clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/logout-successful")
+				.permitAll();*/
 			
 	}
 	
@@ -43,9 +70,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setUserDetailsService(this.userDetailService);
 		provider.setPasswordEncoder(new BCryptPasswordEncoder());
-		
+		provider.setAuthoritiesMapper(authMapper());
 		return provider;
 	}
+	
+	@Bean
+	public GrantedAuthoritiesMapper authMapper() {
+		SimpleAuthorityMapper authmapper = new SimpleAuthorityMapper();
+		authmapper.setConvertToUpperCase(true);
+		authmapper.setDefaultAuthority("USER");
+		return authmapper;
+	}
+	
+
+	
 	
 	
 }

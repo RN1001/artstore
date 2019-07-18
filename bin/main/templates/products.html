@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,24 +28,21 @@
 			  </li>
 			</ul>
 		</nav>
+		<div sec:authentication="name"></div> <!-- works fine -->
+<div sec:authentication="principal.authorities"></div> <!-- works fine -->
+
+<div  sec:authorize="isAuthenticated()" >true</div> <!-- works fine -->
+
+
+<div  sec:authorize="${hasAuthority('ADMIN')}" > IS ADMIN </div> <!-- Doesnt work -->
+<div  sec:authorize="${hasAuthority(#vars.role_admin)}" > IS ADMIN </div> <!-- Doesnt work -->
+
 	<div class="container">
-		<p th:text="${2+2}"> </p>
-				<div sec:authentication="name"></div> <!-- works fine -->
-
-
-<div  sec:authorize="isAnonymous()" >true</div> <!-- works fine -->
-
-
-<div  sec:authorize="${hasAuthority('USER')}" > IS ADMIN </div> <!-- Doesnt work -->
-<div  sec:authorize="${hasAuthority(#vars.role_user)}" > IS ADMIN </div> <!-- Doesnt work -->
-		
-		<a th:href="@{/testdb}"> view peeps s</a>
+		<h2> products </h2>
 	</div>
 	<div th:replace="fragments/footer :: footer"></div>
-	
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
-

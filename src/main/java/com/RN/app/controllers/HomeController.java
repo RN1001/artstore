@@ -3,6 +3,7 @@ package com.RN.app.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ public class HomeController {
 	@Autowired
 	private UserRepository repo;
 	
-	@GetMapping(path="/")
+	@GetMapping(path = "/")
 	public String index() {
 		return "index";
 	}
@@ -43,6 +44,11 @@ public class HomeController {
 		return "login";
 	}
 	
+	@GetMapping(value="/logout-successful")
+	public String logout() {
+		return "logout";
+	}
+
 	@GetMapping(path="/register")
 	public String register(Model model) {
 		model.addAttribute("user", new User());
@@ -59,9 +65,11 @@ public class HomeController {
 		}
 		
 		Boolean userExists = repo.existsByUsername(user.getUsername());
+		Boolean emailExists = repo.existsByEmail(user.getEmail());
 		
-		if (userExists == true) {
-			bindingResult.rejectValue("username", "This username already exists, please use something else.");
+		if (userExists == true || emailExists == true) {
+			bindingResult.rejectValue("username", "This username already exists, please use anoter.");
+			bindingResult.rejectValue("email", "Email already exists, please use another.");
 			return "register";
 		} else {
 			//encodes password, passes form data into constructor.
@@ -69,12 +77,12 @@ public class HomeController {
 			repo.save(user);
 			return "registerSuccessful";
 		}
-		
-		
+				
 	}
 	
 	
 	@GetMapping(path="/testdb")
+	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public @ResponseBody Iterable<User> getAllUsers() {
 		System.err.println(this.repo.findAll());
 		
