@@ -14,15 +14,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.RN.app.Services.UserService;
+import com.RN.app.models.Role;
 import com.RN.app.models.User;
+import com.RN.app.repositories.RoleRepository;
 import com.RN.app.repositories.UserRepository;
 
 @Controller
 @RequestMapping(path="/")
 public class HomeController {
 	
+	private UserRepository userRepo;
+	private RoleRepository roleRepo;
+	private UserService service;
+	
 	@Autowired
-	private UserRepository repo;
+	public HomeController(UserRepository urepo, RoleRepository rrepo, UserService service) {
+		this.userRepo = urepo;
+		this.roleRepo = rrepo;
+		this.service = service;
+	}
 	
 	@GetMapping(path = "/")
 	public String index() {
@@ -64,8 +75,8 @@ public class HomeController {
 			return "register";
 		}
 		
-		Boolean userExists = repo.existsByUsername(user.getUsername());
-		Boolean emailExists = repo.existsByEmail(user.getEmail());
+		Boolean userExists = this.service.doesUsernameExist(user.getUsername());
+		Boolean emailExists = this.service.doesEmailExist(user.getEmail());
 		
 		if (userExists == true || emailExists == true) {
 			bindingResult.rejectValue("username", "This username already exists, please use anoter.");
@@ -73,8 +84,9 @@ public class HomeController {
 			return "register";
 		} else {
 			//encodes password, passes form data into constructor.
-			user = new User(user.getUsername(), encoder.encode(user.getPassword()), user.getEmail(), user.getOrderId());
-			repo.save(user);
+			this.service.saveUser(new User(user.getUsername(), encoder.encode(user.getPassword()), user.getEmail(), user.getOrderId()));
+			this.service.saveRole(new Role(user.getUsername(), "user".toUpperCase()));
+			
 			return "registerSuccessful";
 		}
 				
@@ -84,9 +96,9 @@ public class HomeController {
 	@GetMapping(path="/testdb")
 	@PreAuthorize("hasAuthority('ROLE_USER')")
 	public @ResponseBody Iterable<User> getAllUsers() {
-		System.err.println(this.repo.findAll());
+		System.err.println(this.userRepo.findAll());
 		
-		return this.repo.findAll();
+		return this.userRepo.findAll();
 	}
 	
 }
