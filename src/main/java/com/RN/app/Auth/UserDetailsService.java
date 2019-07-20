@@ -2,6 +2,7 @@ package com.RN.app.Auth;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class UserDetailsService implements org.springframework.security.core.use
 	private UserRepository userRepo;
 	private RoleRepository roleRepo;
 	
+	@Autowired
 	public UserDetailsService(UserRepository userRepo, RoleRepository roleRepo) {
 		this.userRepo = userRepo;
 		this.roleRepo = roleRepo;

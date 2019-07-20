@@ -42,21 +42,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-				.antMatchers("/", "/products", "/register", "/login").permitAll()
+				.antMatchers("/", "/products", "/register").permitAll()
 				.anyRequest().authenticated()
 				.and()
-				.httpBasic();
-		
-		/*	.formLogin()
+			.formLogin()
 				.loginPage("/login")
-				.defaultSuccessUrl("/welcome")
+				.defaultSuccessUrl("/")
 				.permitAll()
 				.and()
 			.logout().invalidateHttpSession(true)
+				.invalidateHttpSession(true)
 				.clearAuthentication(true)
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/logout-successful")
-				.permitAll();*/
+				.permitAll();
 			
 	}
 	
