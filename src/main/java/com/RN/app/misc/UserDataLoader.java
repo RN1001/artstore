@@ -1,10 +1,15 @@
 package com.RN.app.misc;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.RN.app.models.ArtOrder;
 import com.RN.app.models.User;
 import com.RN.app.repositories.UserRepository;
 
@@ -21,7 +26,19 @@ public class UserDataLoader implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(4);
-		this.repo.save(new User("admin123", encoder.encode("123hello"), "someone@email.com", 1));
+		LocalDateTime time = LocalDateTime.now();
+		User user = new User();
+		
+		Set<ArtOrder> set = new HashSet<ArtOrder>();
+		set.add(new ArtOrder(time, user));
+		
+		
+		user.setUsername("admin123");
+		user.setPassword(encoder.encode("123hello"));
+		user.setEmail("someone@email.com");
+		user.setOrders(set);
+		
+		this.repo.save(user);
 	}
 
 }

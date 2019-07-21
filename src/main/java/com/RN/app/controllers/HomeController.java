@@ -84,7 +84,7 @@ public class HomeController {
 			return "register";
 		} else {
 			//encodes password, passes form data into constructor.
-			this.service.saveUser(new User(user.getUsername(), encoder.encode(user.getPassword()), user.getEmail(), user.getOrderId()));
+			this.service.saveUser(new User(user.getUsername(), encoder.encode(user.getPassword()), user.getEmail(), user.getOrders()));
 			this.service.saveRole(new Role(user.getUsername(), "user".toUpperCase()));
 			
 			return "registerSuccessful";

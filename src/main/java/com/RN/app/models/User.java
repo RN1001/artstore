@@ -1,10 +1,15 @@
 package com.RN.app.models;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
@@ -13,6 +18,7 @@ import lombok.NonNull;
 
 
 @Entity
+@Table(name = "User")
 public class User {
 	
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -37,18 +43,19 @@ public class User {
 	private String email;
 	
 	// must be changed to an orders class, collection class with a manytoone
-	@Column(name="order_id")
-	private long orderId;
+	@OneToMany(mappedBy = "userid")
+	@Column(name="artOrder_id")
+	private Set<ArtOrder> orders;
 	
 	public User() {
 		
 	}
 	
-	public User(String username, String password, String email, long orderId) {
+	public User(String username, String password, String email, Set<ArtOrder> orders) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.orderId = orderId;
+		this.orders = orders;
 	}
 
 	public long getId() {
@@ -83,18 +90,18 @@ public class User {
 		this.email = email;
 	}
 
-	public long getOrderId() {
-		return orderId;
+	public Set<ArtOrder> getOrders() {
+		return orders;
 	}
 
-	public void setOrderId(long orderId) {
-		this.orderId = orderId;
+	public void setOrders(Set<ArtOrder> orders) {
+		this.orders = orders;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
-				+ ", orderId=" + orderId + "]";
+				+ ", orders=" + orders + "]";
 	}
 
 	
