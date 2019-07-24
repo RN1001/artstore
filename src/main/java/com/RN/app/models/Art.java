@@ -34,6 +34,6 @@ public class Art {
 	
 	@ManyToMany
 	@JoinTable(name = "order_art", joinColumns = @JoinColumn(name = "art_id"), inverseJoinColumns = @JoinColumn(name = "order_id"))
-	private Set<ArtOrder> orders;
+	private Set<Orders> orders;
 	
 }

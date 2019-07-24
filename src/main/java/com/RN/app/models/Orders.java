@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ArtOrder")
-public class ArtOrder {
+@Table(name = "Orders")
+public class Orders {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,23 +25,23 @@ public class ArtOrder {
 	private	LocalDateTime orderedDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "userid")
 	private User userid;
 	
 	@ManyToMany(mappedBy = "orders")
 	private Set<Art> artOrders;
 	
-	public ArtOrder() {
+	public Orders() {
 		super();
 	}
 	
-	public ArtOrder(LocalDateTime orderedDate, User userid) {
+	public Orders(LocalDateTime orderedDate, User userid) {
 		super();
 		this.orderedDate = orderedDate;
 		this.userid = userid;
 	}
 
-	public ArtOrder(long artOrderId, LocalDateTime orderedDate, User userid) {
+	public Orders(long artOrderId, LocalDateTime orderedDate, User userid) {
 		super();
 		this.artOrderId = artOrderId;
 		this.orderedDate = orderedDate;

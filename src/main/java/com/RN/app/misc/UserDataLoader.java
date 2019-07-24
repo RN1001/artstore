@@ -9,7 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.RN.app.models.ArtOrder;
+import com.RN.app.models.Orders;
 import com.RN.app.models.User;
 import com.RN.app.repositories.UserRepository;
 
@@ -29,8 +29,8 @@ public class UserDataLoader implements CommandLineRunner {
 		LocalDateTime time = LocalDateTime.now();
 		User user = new User();
 		
-		Set<ArtOrder> set = new HashSet<ArtOrder>();
-		set.add(new ArtOrder(time, user));
+		Set<Orders> set = new HashSet<Orders>();
+		set.add(new Orders(time, user));
 		
 		
 		user.setUsername("admin123");

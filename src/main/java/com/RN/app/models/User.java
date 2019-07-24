@@ -24,8 +24,8 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Id
 	@NonNull
-	@Column(name="user_id")
-	private long id;
+	@Column(name="userid")
+	private long userid;
 	
 	@Size(min=5, max=30)
 	@NonNull
@@ -44,14 +44,13 @@ public class User {
 	
 	// must be changed to an orders class, collection class with a manytoone
 	@OneToMany(mappedBy = "userid")
-	@Column(name="artOrder_id")
-	private Set<ArtOrder> orders;
+	private Set<Orders> orders;
 	
 	public User() {
 		
 	}
 	
-	public User(String username, String password, String email, Set<ArtOrder> orders) {
+	public User(String username, String password, String email, Set<Orders> orders) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -59,11 +58,11 @@ public class User {
 	}
 
 	public long getId() {
-		return id;
+		return userid;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(long userid) {
+		this.userid = userid;
 	}
 
 	public String getUsername() {
@@ -90,17 +89,17 @@ public class User {
 		this.email = email;
 	}
 
-	public Set<ArtOrder> getOrders() {
+	public Set<Orders> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(Set<ArtOrder> orders) {
+	public void setOrders(Set<Orders> orders) {
 		this.orders = orders;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email
+		return "User [id=" + userid + ", username=" + username + ", password=" + password + ", email=" + email
 				+ ", orders=" + orders + "]";
 	}
 
