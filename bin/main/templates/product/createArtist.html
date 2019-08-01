@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- my css -->
+    <link rel="stylesheet" href="#" />
+    <title> Art Store </title>
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+	
+	<main class="container">
+	<br>
+	
+	<form action="#" th:action="@{/product/createArtist}" th:object="${artist}" method="post">
+		<h3> New Artist </h3>
+			<p> firstname  <input type="text" id="firstname" class="form-control" th:field="*{firstname}"/> </p> <p th:if="${#fields.hasErrors('firstname')}" th:error="*{firstname}"> Firstname should be over 2 letters. </p> 
+			<p> lastname <input type="text" id="lastname"  class="form-control" th:field="*{lastname}" /> </p> <p th:if="${#fields.hasErrors('lastname')}" th:error="*{lastname}"> Lastname should be over 2 letters </p>
+
+			<input type="submit" class="btn btn-secondary"/>   
+	</form>
+	<br>
+	
+	<form action="#" th:action="@{/product/createArt}" th:object="${art}" method="post">
+		<h3> New Art </h3>
+			<p> name <input type="text" id="name" class="form-control" th:field="*{name}"/> </p> <p th:if="${#fields.hasErrors('name')}" th:error="*{name}"> name should be over 2 letters. </p> 
+			<p> cost <input type="number" id="cost"  class="form-control" th:field="*{cost}" /> </p> <p th:if="${#fields.hasErrors('cost')}" th:error="*{cost}"> cost should be over 2 letters </p>
+			<!-- need select option with artists -->
+			<select th:field="*{artistid}">
+				<option value=""> Select an artist </option>
+				<option th:each="artist : ${artists}" th:value="${artist.artistId}" th:text="${artist.firstname + ' ' + artist.lastname}"> </option>
+			</select>
+			<br>
+			<br>
+			<input type="submit" class="btn btn-secondary"/>   
+	</form>
+	
+	
+	
+	<br>
+	</main>
+	<div th:replace="fragments/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>

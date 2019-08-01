@@ -9,25 +9,7 @@
     <title> Art Store </title>
 </head>
 <body>
-	<nav class="navbar navbar-light bg-light">
-			<ul class="nav">
-			  <li class="nav-item">
-			    <a class="nav-link active" th:href="@{/}">Home</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" th:href="@{/products}">Products</a>
-			  </li>
-			  <li class="nav-item" sec:authorize="isAnonymous()">
-			    <a class="nav-link" th:href="@{/register}">Register</a>
-			  </li>
-			  <li class="nav-item" sec:authorize="isAnonymous()">
-			    <a class="nav-link" th:href="@{/login}">Login</a>
-			  </li>
-			  <li class="nav-item" sec:authorize="isAuthenticated()">
-			  	<a class="nav-link" th:href="@{/logout}"> Logout </a>
-			  </li>
-			</ul>
-		</nav>
+	<div th:replace="fragments/header :: header"></div>
 	<div class="container">
 		<h2> Login </h2>
 		
@@ -35,9 +17,9 @@
 			<div th:if="${param.error}">
 				<p class="alert alert-danger"> credentials are incorrect </p>
 			</div>
-			<p> Username <input type="text" name="username" /> </p> 
-			<p> Password <input type="password" name="password"/> </p>
-			<input type="submit" value="submit"/>  
+			<p> Username <input type="text" name="username" class="form-control" /> </p> 
+			<p> Password <input type="password" name="password" class="form-control"/> </p>
+			<input type="submit" value="submit" class="btn btn-secondary"/>  
 		</form>
 	</div>
 
